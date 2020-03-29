@@ -1,0 +1,87 @@
+define
+
+# Entities
+	person sub entity,
+		has first-name,
+		has middle-initial,
+		has last-name,
+		has birth-date,
+		has sex,
+		plays patient,
+		plays account-holder,
+		plays person-with-address;
+
+		# Attributes
+			first-name sub attribute,
+				datatype string;
+
+			middle-initial sub attribute,
+				datatype string;
+
+			last-name sub attribute,
+				datatype string;
+
+			birth-date sub attribute,
+				datatype date;
+
+			sex sub attribute,
+				datatype string;
+	
+	address sub entity,
+		has street-1,
+		has street-2,
+		has city,
+		has state,
+		has zip-code,
+		plays place-lived;
+
+		# Attributes
+			street-1 sub attribute,
+				datatype string;
+
+			street-2 sub attribute,
+				datatype string;
+
+			city sub attribute,
+				datatype string;
+				
+			state sub attribute,
+				datatype string;
+
+			zip-code sub attribute,
+				datatype string;
+
+	account sub entity,
+		has account-number,
+		plays patient-account;
+		
+		# Attributes
+			account-number sub attribute,
+				datatype string;
+
+# Relations
+	holds-account sub relation,
+		relates account-holder,
+		relates patient-account,
+		plays holds-account-in-record;
+	
+	lives-at-address sub relation,
+		relates person-with-address,
+		relates place-lived,
+		has is-current,
+		plays lives-at-address-in-record,
+		plays lived-at-address-in-record;
+
+		# Attributes
+			is-current sub attribute,
+				datatype boolean;
+
+	patient-record sub relation,
+		relates patient,
+		relates holds-account-in-record,
+		relates lives-at-address-in-record,
+		relates lived-at-address-in-record,
+		plays consolidatable-patient-record;
+	
+	patient-record-group sub relation,
+		relates consolidatable-patient-record;
